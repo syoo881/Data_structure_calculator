@@ -1,5 +1,6 @@
 package nz.ac.auckland.se281.datastructures;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,12 +47,26 @@ public class Graph<T extends Comparable<T>> {
       if (isRoot) {
         roots.add(vertex);
       }
-    }
 
+      if (this.isEquivalence()) {
+        roots.add(this.getEquivalenceClassVertex());
+      }
+    }
     return roots;
 
     // Add to this, when you find an equivalence class
     // Maybe also have to add a way to filter out verticies without any outgoing edge (no source)
+  }
+
+  public T getEquivalenceClassVertex() {
+    Set<T> vertexSet = new TreeSet<>();
+    for (T vertex : this.verticies) {
+      if (getEquivalenceClass(vertex).size() > 0) {
+        vertexSet.add(vertex);
+      }
+    }
+    List<T> vertexList = new ArrayList<>(vertexSet);
+    return vertexList.get(0);
   }
 
   // Not even using these am I?
@@ -177,16 +192,31 @@ public class Graph<T extends Comparable<T>> {
   }
 
   public boolean isEquivalence() {
-    if (isReflexive() && isSymmetric() && isTransitive()) {
+    if (this.isReflexive() && this.isSymmetric() && this.isTransitive()) {
       return true;
     }
-
     return false;
   }
 
+  public Set<T> equivalenceList(T vertex) {
+    Set<T> equivalenceList = new TreeSet<>();
+    for (Edge<T> edge : this.edges) {
+      T source1 = edge.getSource();
+      T destination1 = edge.getDestination();
+      if (vertex.equals(source1)) {
+        equivalenceList.add(destination1);
+      }
+    }
+    return equivalenceList;
+  }
+
+  // Equivalence class might have to consider explicit links, via transitivity
   public Set<T> getEquivalenceClass(T vertex) {
-    // TODO: Task 1.
-    throw new UnsupportedOperationException();
+    Set<T> equivalenceClass = new HashSet<T>();
+    if (!(this.isEquivalence())) {
+      return equivalenceClass;
+    }
+    return this.equivalenceList(vertex);
   }
 
   public List<T> iterativeBreadthFirstSearch() {
