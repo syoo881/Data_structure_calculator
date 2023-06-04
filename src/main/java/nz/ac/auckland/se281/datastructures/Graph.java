@@ -441,7 +441,7 @@ public class Graph<T extends Comparable<T>> {
     }
   }
 
-  private Set<T> getNeighbors(T vertex) {
+  private Set<T> getNeighborsReverse(T vertex) {
     Set<T> neighbors = new TreeSet<>(new ReverseNumericalComparator());
 
     for (Edge<T> edge : edges) {
@@ -489,7 +489,7 @@ public class Graph<T extends Comparable<T>> {
           visitedSet.add(currentVertex);
 
           // Get all the neighbors of the current vertex
-          Set<T> neighbors = getNeighbors(currentVertex);
+          Set<T> neighbors = getNeighborsReverse(currentVertex);
 
           // Push the unvisited neighbors onto the stack
           for (T neighbor : neighbors) {
@@ -504,13 +504,86 @@ public class Graph<T extends Comparable<T>> {
     return visited;
   }
 
+  private void recursiveBFS(T vertex, Set<T> visited, CustomLinkedList<T> linkedList) {
+    CustomQueue<T> queue = new CustomQueue<>();
+    queue.enqueue(vertex);
+
+    while (!queue.isEmpty()) {
+        T currentVertex = queue.dequeue();
+
+        if (!visited.contains(currentVertex)) {
+            visited.add(currentVertex);
+            linkedList.add(currentVertex);
+
+            Set<T> adjacentVertices = getAdjacentVertices(currentVertex);
+            for (T adjacentVertex : adjacentVertices) {
+                if (!visited.contains(adjacentVertex)) {
+                    queue.enqueue(adjacentVertex);
+                }
+            }
+        }
+      }
+    }
+
   public List<T> recursiveBreadthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
+    if (verticies.isEmpty()) {
+      return new ArrayList<>();
+  }
+
+  Set<T> temp = getRoots();
+  List<T> tempRoots = new ArrayList<>(temp);
+
+  Set<T> visited = new HashSet<>();
+  CustomLinkedList<T> linkedList = new CustomLinkedList<>();
+
+  for (T root : tempRoots) {
+      recursiveBFS(root, visited, linkedList);
+  }
+
+  return linkedList.toList();
+  }
+
+  private Set<T> getNeighbors(T vertex) {
+    Set<T> neighbors = new TreeSet<>(new NumericalComparator());
+
+    for (Edge<T> edge : edges) {
+      if (edge.getSource().equals(vertex)) {
+        neighbors.add(edge.getDestination());
+      }
+    }
+
+    return neighbors;
+  }
+
+  private void recursiveDFS(T vertex, List<T> visited, Set<T> visitedSet) {
+    visited.add(vertex);
+    visitedSet.add(vertex);
+
+    Set<T> neighbors = new TreeSet<>(new ReverseNumericalComparator());
+    neighbors = getNeighbors(vertex);
+
+    for (T neighbor : neighbors) {
+      if (!visitedSet.contains(neighbor)) {
+        recursiveDFS(neighbor, visited, visitedSet);
+      }
+    }
   }
 
   public List<T> recursiveDepthFirstSearch() {
-    // TODO: Task 3.
-    throw new UnsupportedOperationException();
+    List<T> visited = new ArrayList<>();
+    Set<T> visitedSet = new HashSet<>();
+
+    if (verticies.isEmpty()) {
+      return visited;
+    }
+
+    Set<T> temp = getRoots();
+    List<T> tempRoots = new ArrayList<>(temp);
+
+    for (T startVertex : tempRoots) {
+      recursiveDFS(startVertex, visited, visitedSet);
+    }
+
+    return visited;
   }
 }
