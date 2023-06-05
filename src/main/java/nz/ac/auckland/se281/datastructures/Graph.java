@@ -16,10 +16,16 @@ import java.util.TreeSet;
  */
 public class Graph<T extends Comparable<T>> {
 
-  private Set<T> verticies = new HashSet<>();
-  private Set<Edge<T>> edges = new HashSet<>();
+  private Set<T> verticies;
+  private Set<Edge<T>> edges;
   private Set<T> roots;
 
+  /**
+   * Creates a new graph.
+   *
+   * @param verticies The set of verticies in the graph.
+   * @param edges The set of edges in the graph.
+   */
   public Graph(Set<T> verticies, Set<Edge<T>> edges) {
     this.verticies = verticies;
     this.edges = edges;
@@ -68,9 +74,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * adds lowest indexed number of the equivalence classes to a list and returns it
+   * adds lowest indexed number of the equivalence classes to a list and returns it.
    *
-   * @return A list of veriticies that are the root of an equivalence class
+   * @return A list of veriticies that are the root of an equivalence class.
    */
   public List<T> getEquivalenceClassVertex() {
     List<T> vertexList = new ArrayList<>();
@@ -88,10 +94,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks if the vertex is both a source and destination, and returns a boolean value
+   * checks if the vertex is both a source and destination, and returns a boolean value.
    *
-   * @param vertex the vertex to check
-   * @return boolean value of whether the vertex is both a source and destination
+   * @param vertex the vertex to check.
+   * @return boolean value of whether the vertex is both a source and destination.
    */
   public boolean isInBothSourceAndDestination(T vertex) {
     for (Edge<T> edge : this.edges) {
@@ -106,9 +112,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks if the graph is reflexive, and returns a boolean value
+   * checks if the graph is reflexive, and returns a boolean value.
    *
-   * @return boolean value of whether the graph is reflexive
+   * @return boolean value of whether the graph is reflexive.
    */
   public boolean isReflexive() {
     for (T vertex : this.verticies) {
@@ -120,11 +126,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks if source and destination are the same, and returns a boolean value
+   * checks if source and destination are the same, and returns a boolean value.
    *
-   * @param source the source vertex
-   * @param destination the destination vertex
-   * @return boolean value of whether the graph is symmetric
+   * @param source the source vertex.
+   * @param destination the destination vertex.
+   * @return boolean value of whether the graph is symmetric.
    */
   public boolean isSourceAndDestinationSymmetric(T source, T destination) {
     for (Edge<T> edge : this.edges) {
@@ -139,9 +145,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks if the graph is symmetric, and returns a boolean value
+   * checks if the graph is symmetric, and returns a boolean value.
    *
-   * @return boolean value of whether the graph is symmetric
+   * @return boolean value of whether the graph is symmetric.
    */
   public boolean isSymmetric() {
     for (Edge<T> edge : this.edges) {
@@ -157,11 +163,11 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * checks whether the given source and destination are connected by the same edge and returns a
-   * boolean value
+   * boolean value.
    *
-   * @param source the source vertex
-   * @param destination the source destination
-   * @return boolean value whether the source and destination are connected by the same edge
+   * @param source the source vertex.
+   * @param destination the source destination.
+   * @return boolean value whether the source and destination are connected by the same edge.
    */
   public boolean isInSourceAndDestination(T source, T destination) {
     for (Edge<T> edge : this.edges) {
@@ -176,11 +182,11 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks whether the source and destination are transitive
+   * checks whether the source and destination are transitive.
    *
-   * @param source the source vertex
-   * @param destination the destination vertex
-   * @return boolean value whether the source and destination are transitive
+   * @param source the source vertex.
+   * @param destination the destination vertex.
+   * @return boolean value whether the source and destination are transitive.
    */
   public boolean isSourceAndDestinationTransitive(T source, T destination) {
     for (Edge<T> edge : this.edges) {
@@ -197,9 +203,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks whether the graph is transitive
+   * checks whether the graph is transitive.
    *
-   * @return boolean value whether the graph is transitive
+   * @return boolean value whether the graph is transitive.
    */
   public boolean isTransitive() {
     for (Edge<T> edge : this.edges) {
@@ -214,11 +220,11 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * checks whether there exists an edge from the destination to the source and returns a boolean
-   * value
+   * value.
    *
-   * @param source the source vertex
-   * @param destination the source destination
-   * @return boolean value whether there exists an edge from the destination to the source
+   * @param source the source vertex.
+   * @param destination the source destination.
+   * @return boolean value whether there exists an edge from the destination to the source.
    */
   public boolean reverseIsInSourceAndDestination(T source, T destination) {
     for (Edge<T> edge : this.edges) {
@@ -233,9 +239,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks whether the graph is antisymmetric
+   * checks whether the graph is antisymmetric.
    *
-   * @return boolean value whether the graph is antisymmetric
+   * @return boolean value whether the graph is antisymmetric.
    */
   public boolean isAntiSymmetric() {
     for (Edge<T> edge : this.edges) {
@@ -253,9 +259,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * checks whether the graph is an Equivalence relation
+   * checks whether the graph is an Equivalence relation.
    *
-   * @return boolean value whether the graph is an equivalence relation
+   * @return boolean value whether the graph is an equivalence relation.
    */
   public boolean isEquivalence() {
     if (this.isReflexive() && this.isSymmetric() && this.isTransitive()) {
@@ -266,10 +272,10 @@ public class Graph<T extends Comparable<T>> {
 
   /**
    * goes through all verticies, and returns a numerically ordered set of verticies related to the
-   * given vertex
+   * given vertex.
    *
-   * @param vertex the vertex to check
-   * @return a numerically ordered set of verticies related to the given vertex
+   * @param vertex the vertex to check.
+   * @return a numerically ordered set of verticies related to the given vertex.
    */
   public Set<T> equivalenceList(T vertex) {
     // Create a new set to store the equivalence list in numerical order
@@ -286,10 +292,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * returns the equivalence class of a given vertex
+   * returns the equivalence class of a given vertex.
    *
-   * @param vertex the vertex to check
-   * @return the set of equivalence class of the vertex
+   * @param vertex the vertex to check.
+   * @return the set of equivalence class of the vertex.
    */
   public Set<T> getEquivalenceClass(T vertex) {
     Set<T> equivalenceClass = new HashSet<T>();
@@ -301,9 +307,9 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * performs an iterative BreadthFirstSearch, and returns the searched list of verticies
+   * performs an iterative BreadthFirstSearch, and returns the searched list of verticies.
    *
-   * @return the list of verticies, as searched through by the BreadthFirstSearch algorithm
+   * @return the list of verticies, as searched through by the BreadthFirstSearch algorithm.
    */
   public List<T> iterativeBreadthFirstSearch() {
     if (verticies.isEmpty()) {
@@ -342,10 +348,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * returns the set of adjacent verticies of the given vertex
+   * returns the set of adjacent verticies of the given vertex.
    *
-   * @param vertex the vertex to find the adjacent verticies of
-   * @return the set of adjacent verticies of the given vertex
+   * @param vertex the vertex to find the adjacent verticies of.
+   * @return the set of adjacent verticies of the given vertex.
    */
   private Set<T> getAdjacentVertices(T vertex) {
     // make the set of adjacent veticies, be in numerical order
@@ -477,10 +483,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * returns the set of verticies that are adjacent to the given vertex, in reverse numerical order
+   * returns the set of verticies that are adjacent to the given vertex, in reverse numerical order.
    *
-   * @param vertex
-   * @return the set of verticies that are adjacent to the given vertex, in reverse numerical order
+   * @param vertex the vertex to find the adjacent verticies of.
+   * @return the set of verticies that are adjacent to the given vertex, in reverse numerical order.
    */
   private Set<T> getNeighborsReverse(T vertex) {
     // Get neighbors of a given vertex, and put them in revere numerical order
@@ -503,12 +509,12 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * performs an iterative DepthFirstSearch, and returns the searched list of verticies
+   * performs an iterative DepthFirstSearch, and returns the searched list of verticies.
    *
-   * @return the list of verticies, as searched through by the DepthFirstSearch algorithm
+   * @return the list of verticies, as searched through by the DepthFirstSearch algorithm.
    */
   public List<T> iterativeDepthFirstSearch() {
-    // Create a stack implementatino using the customLinkedList
+    // Create a stack implementation using the customLinkedList
     List<T> visited = new ArrayList<>();
     Set<T> visitedSet = new HashSet<>();
     CustomStack<T> stack = new CustomStack<>();
@@ -548,15 +554,15 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * performs a recursive BreadthFirstSearch to update the linkedList
+   * performs a recursive BreadthFirstSearch to update the linkedList.
    *
-   * @param roots roots of the vertex
-   * @param index index of the roots array
-   * @param queue queue of verticies to visit
-   * @param visited visited set of verticies of the graph
-   * @param linkedList linkedList of the vertex
+   * @param roots roots of the vertex.
+   * @param index index of the roots array.
+   * @param queue queue of verticies to visit.
+   * @param visited visited set of verticies of the graph.
+   * @param linkedList linkedList of the vertex.
    */
-  private void recursiveBFS(
+  private void recursivebfs(
       List<T> roots,
       int index,
       CustomQueue<T> queue,
@@ -573,15 +579,15 @@ public class Graph<T extends Comparable<T>> {
     processQueue(queue, visited, linkedList);
 
     // Calling recursively
-    recursiveBFS(roots, index + 1, queue, visited, linkedList);
+    recursivebfs(roots, index + 1, queue, visited, linkedList);
   }
 
   /**
-   * helper method to process the queue and add values to the linkedList
+   * helper method to process the queue and add values to the linkedList.
    *
-   * @param queue queue of verticies to visit
-   * @param visited visited set of verticies of the graph
-   * @param linkedList linkedList of the vertex
+   * @param queue queue of verticies to visit.
+   * @param visited visited set of verticies of the graph.
+   * @param linkedList linkedList of the vertex.
    */
   private void processQueue(CustomQueue<T> queue, Set<T> visited, CustomLinkedList<T> linkedList) {
     if (queue.isEmpty()) {
@@ -608,10 +614,10 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * performs a recursive BreadthFirstSearch, and returns the searched list of verticies
+   * performs a recursive BreadthFirstSearch, and returns the searched list of verticies.
    *
    * @return the list of verticies, as searched through recursively by the BreadthFirstSearch
-   *     algorithm
+   *     algorithm.
    */
   public List<T> recursiveBreadthFirstSearch() {
     if (verticies.isEmpty()) {
@@ -627,16 +633,16 @@ public class Graph<T extends Comparable<T>> {
     CustomQueue<T> queue = new CustomQueue<>();
 
     // Call the recursiveBFS method to perform the recursive BFS
-    recursiveBFS(tempRoots, 0, queue, visited, linkedList);
+    recursivebfs(tempRoots, 0, queue, visited, linkedList);
 
     return linkedList.toList();
   }
 
   /**
-   * returns the set of verticies that are adjacent to the given vertex, in numerical order
+   * returns the set of verticies that are adjacent to the given vertex, in numerical order.
    *
-   * @param vertex
-   * @return the set of verticies that are adjacent to the given vertex, in numerical order
+   * @param vertex the vertex to find the adjacent verticies of.
+   * @return the set of verticies that are adjacent to the given vertex, in numerical order.
    */
   private Set<T> getNeighbors(T vertex) {
     // create a set of neighbors, to add them in numerical order
@@ -652,13 +658,13 @@ public class Graph<T extends Comparable<T>> {
   }
 
   /**
-   * performs a recursive DepthFirstSearch to update the visited list
+   * performs a recursive DepthFirstSearch to update the visited list.
    *
-   * @param vertex vertex to start the DFS from
-   * @param visited visited list of verticies
-   * @param visitedSet visited set of verticies
+   * @param vertex vertex to start the DFS from.
+   * @param visited visited list of verticies.
+   * @param visitedSet visited set of verticies.
    */
-  private void recursiveDFS(T vertex, List<T> visited, Set<T> visitedSet) {
+  private void recursivedfs(T vertex, List<T> visited, Set<T> visitedSet) {
     visited.add(vertex);
     visitedSet.add(vertex);
 
@@ -669,16 +675,16 @@ public class Graph<T extends Comparable<T>> {
     // Using the neighbors, recursively call the recursiveDFS method
     for (T neighbor : neighbors) {
       if (!visitedSet.contains(neighbor)) {
-        recursiveDFS(neighbor, visited, visitedSet);
+        recursivedfs(neighbor, visited, visitedSet);
       }
     }
   }
 
   /**
-   * performs a recursive DepthFirstSearch, and returns the searched list of verticies
+   * performs a recursive DepthFirstSearch, and returns the searched list of verticies.
    *
    * @return the list of verticies, as searched through recursively by the DepthFirstSearch
-   *     algorithm
+   *     algorithm.
    */
   public List<T> recursiveDepthFirstSearch() {
     List<T> visited = new ArrayList<>();
@@ -694,7 +700,7 @@ public class Graph<T extends Comparable<T>> {
     // For every root vertex, call the recursiveDFS method
     for (T startVertex : tempRoots) {
       // Call the recursiveDFS method to perform the recursive DFS
-      recursiveDFS(startVertex, visited, visitedSet);
+      recursivedfs(startVertex, visited, visitedSet);
     }
 
     return visited;
