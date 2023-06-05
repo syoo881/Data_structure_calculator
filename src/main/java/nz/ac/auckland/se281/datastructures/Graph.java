@@ -16,6 +16,138 @@ import java.util.TreeSet;
  */
 public class Graph<T extends Comparable<T>> {
 
+  private class NumericalComparator implements Comparator<T> {
+    @Override
+    public int compare(T o1, T o2) {
+      Integer i1 = Integer.parseInt(o1.toString());
+      Integer i2 = Integer.parseInt(o2.toString());
+      return i1.compareTo(i2);
+    }
+  }
+
+  private class ReverseNumericalComparator implements Comparator<T> {
+    @Override
+    public int compare(T o1, T o2) {
+      Integer i1 = Integer.parseInt(o1.toString());
+      Integer i2 = Integer.parseInt(o2.toString());
+      return i2.compareTo(i1);
+    }
+  }
+
+  private class CustomLinkedList<T> {
+    private Node<T> head;
+    private Node<T> tail;
+
+    private void add(T data) {
+      // Create a new node, and add it to the end of the linked list
+      Node<T> newNode = new Node<>(data);
+      if (head == null) {
+        head = newNode;
+        tail = newNode;
+      } else {
+        tail.setNext(newNode);
+        tail = newNode;
+      }
+    }
+
+    private T removeLast() {
+      T lastData = tail.getData();
+      if (head == tail) {
+        head = null;
+        tail = null;
+        // remove the last node if head is not equal to tail
+      } else {
+        Node<T> currentNode = head;
+        // Keep getting the next node until the next node is the tail
+        while (currentNode.getNext() != tail) {
+          currentNode = currentNode.getNext();
+        }
+        currentNode.setNext(null);
+        tail = currentNode;
+      }
+      return lastData;
+    }
+
+    private boolean isEmpty() {
+      return head == null;
+    }
+
+    private List<T> toList() {
+      List<T> list = new ArrayList<>();
+      Node<T> currentNode = head;
+      // Using nodes to get the data of each node, and add it to the list
+      while (currentNode != null) {
+        list.add(currentNode.getData());
+        currentNode = currentNode.getNext();
+      }
+      return list;
+    }
+  }
+
+  private class CustomQueue<T> {
+    private CustomLinkedList<T> queue;
+
+    private CustomQueue() {
+      queue = new CustomLinkedList<>();
+    }
+
+    private void enqueue(T data) {
+      queue.add(data);
+    }
+
+    private T dequeue() {
+      T data = queue.head.getData();
+      queue.head = queue.head.getNext();
+      return data;
+    }
+
+    private boolean isEmpty() {
+      return queue.head == null;
+    }
+  }
+
+  private class CustomStack<T> {
+    private CustomLinkedList<T> list;
+
+    private CustomStack() {
+      list = new CustomLinkedList<>();
+    }
+
+    private void push(T data) {
+      list.add(data);
+    }
+
+    private T pop() {
+      return list.removeLast();
+    }
+
+    private boolean isEmpty() {
+      return list.isEmpty();
+    }
+  }
+
+  private class Node<T> {
+    private T data;
+    private Node<T> next;
+
+    private Node(T data) {
+      this.data = data;
+      next = null;
+    }
+
+    private T getData() {
+      return data;
+    }
+
+    private Node<T> getNext() {
+      return next;
+    }
+
+    private void setNext(Node<T> next) {
+      this.next = next;
+    }
+  }
+
   private Set<T> verticies;
   private Set<Edge<T>> edges;
   private Set<T> roots;
@@ -62,15 +194,6 @@ public class Graph<T extends Comparable<T>> {
     }
     return roots;
     // Maybe also have to add a way to filter out verticies without any outgoing edge (no source)
-  }
-
-  private class NumericalComparator implements Comparator<T> {
-    @Override
-    public int compare(T o1, T o2) {
-      Integer i1 = Integer.parseInt(o1.toString());
-      Integer i2 = Integer.parseInt(o2.toString());
-      return i1.compareTo(i2);
-    }
   }
 
   /**
@@ -365,123 +488,6 @@ public class Graph<T extends Comparable<T>> {
     return adjacentVertices;
   }
 
-  private class CustomLinkedList<T> {
-    private Node<T> head;
-    private Node<T> tail;
-
-    private void add(T data) {
-      // Create a new node, and add it to the end of the linked list
-      Node<T> newNode = new Node<>(data);
-      if (head == null) {
-        head = newNode;
-        tail = newNode;
-      } else {
-        tail.setNext(newNode);
-        tail = newNode;
-      }
-    }
-
-    private T removeLast() {
-      if (isEmpty()) {}
-      T lastData = tail.getData();
-      if (head == tail) {
-        head = null;
-        tail = null;
-        // remove the last node if head is not equal to tail
-      } else {
-        Node<T> currentNode = head;
-        // Keep getting the next node until the next node is the tail
-        while (currentNode.getNext() != tail) {
-          currentNode = currentNode.getNext();
-        }
-        currentNode.setNext(null);
-        tail = currentNode;
-      }
-      return lastData;
-    }
-
-    private boolean isEmpty() {
-      return head == null;
-    }
-
-    private List<T> toList() {
-      List<T> list = new ArrayList<>();
-      Node<T> currentNode = head;
-      // Using nodes to get the data of each node, and add it to the list
-      while (currentNode != null) {
-        list.add(currentNode.getData());
-        currentNode = currentNode.getNext();
-      }
-      return list;
-    }
-  }
-
-  private class CustomQueue<T> {
-    private CustomLinkedList<T> queue;
-
-    private CustomQueue() {
-      queue = new CustomLinkedList<>();
-    }
-
-    private void enqueue(T data) {
-      queue.add(data);
-    }
-
-    private T dequeue() {
-      if (queue.head == null) {}
-      T data = queue.head.getData();
-      queue.head = queue.head.getNext();
-      return data;
-    }
-
-    private boolean isEmpty() {
-      return queue.head == null;
-    }
-  }
-
-  private class CustomStack<T> {
-    private CustomLinkedList<T> list;
-
-    private CustomStack() {
-      list = new CustomLinkedList<>();
-    }
-
-    private void push(T data) {
-      list.add(data);
-    }
-
-    private T pop() {
-      if (isEmpty()) {}
-      return list.removeLast();
-    }
-
-    private boolean isEmpty() {
-      return list.isEmpty();
-    }
-  }
-
-  private class Node<T> {
-    private T data;
-    private Node<T> next;
-
-    private Node(T data) {
-      this.data = data;
-      next = null;
-    }
-
-    private T getData() {
-      return data;
-    }
-
-    private Node<T> getNext() {
-      return next;
-    }
-
-    private void setNext(Node<T> next) {
-      this.next = next;
-    }
-  }
-
   /**
    * returns the set of verticies that are adjacent to the given vertex, in reverse numerical order.
    *
@@ -497,15 +503,6 @@ public class Graph<T extends Comparable<T>> {
       }
     }
     return neighbors;
-  }
-
-  private class ReverseNumericalComparator implements Comparator<T> {
-    @Override
-    public int compare(T o1, T o2) {
-      Integer i1 = Integer.parseInt(o1.toString());
-      Integer i2 = Integer.parseInt(o2.toString());
-      return i2.compareTo(i1);
-    }
   }
 
   /**
@@ -669,7 +666,7 @@ public class Graph<T extends Comparable<T>> {
     visitedSet.add(vertex);
 
     // Create a set of neighbors, to add them in reverse numerical order
-    Set<T> neighbors = new TreeSet<>(new ReverseNumericalComparator());
+    Set<T> neighbors;
     neighbors = getNeighbors(vertex);
 
     // Using the neighbors, recursively call the recursiveDFS method
