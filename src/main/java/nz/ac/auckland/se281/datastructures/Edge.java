@@ -17,14 +17,21 @@ public class Edge<T> {
     this.destination = destination;
   }
 
-
-  public T getSource(){
+  /**
+   * Get the source vertex of this edge.
+   *
+   * @return The source vertex.
+   */
+  public T getSource() {
     return source;
   }
 
-  public T getDestination(){
+  /**
+   * Get the destination vertex of this edge.
+   *
+   * @return The destination vertex.
+   */
+  public T getDestination() {
     return destination;
-
   }
-
 }
