@@ -1,5 +1,5 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/EoVwWP_A)
-# Assignment 3
+# Data structure calculator
 
-You will find instructions for this assignment on the course website.
+Given a graph via a file of nodes, this calculator is able to calculate properties of the graph such as transitivity, and symmetry, while also performing a breadth-first search and depth-first search
 
+To run: .\mvnw.cmd clean compile exec:java@run
